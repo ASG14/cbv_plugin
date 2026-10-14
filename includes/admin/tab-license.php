@@ -21,31 +21,137 @@ function chibepoosham_register_license_setting(): void {
 
 function chibepoosham_tab_license(): void {
 	$license = chibepoosham_get_license();
-	$labels  = array(
+
+	$labels = array(
 		'inactive' => 'فعال نشده',
-		'pending'  => 'کلید ذخیره شد، در انتظار تأیید',
+		'pending'  => 'کلید ذخیره شده؛ در انتظار تأیید',
 		'active'   => 'فعال',
 	);
-	$status  = isset( $labels[ $license['status'] ] ) ? $license['status'] : 'inactive';
+
+	$status = isset( $labels[ $license['status'] ] )
+		? $license['status']
+		: 'inactive';
 	?>
-	<form class="cbp-card cbp-card--narrow" method="post" action="options.php">
-		<?php settings_fields( 'chibepoosham_license_group' ); ?>
+
+	<section class="cbp-guide-hero">
+		<h2>فروشگاهت را به چی بپوشم؟ متصل کن 🔐</h2>
+		<p>
+			برای استفاده از سرویس پرو مجازی، ابتدا حساب کاربری بساز،
+			فروشگاهت را ثبت کن و پلن مناسب را بخر. سپس کلید لایسنس را
+			در همین صفحه وارد کن.
+		</p>
+	</section>
+
+	<div class="cbp-card cbp-card--narrow">
 
 		<div class="cbp-card__head">
-			<h2>فعال‌سازی لایسنس</h2>
-			<span class="cbp-badge cbp-badge--<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $labels[ $status ] ); ?></span>
+			<h2>وضعیت کلید لایسنس</h2>
+
+			<span class="cbp-badge cbp-badge--<?php echo esc_attr( $status ); ?>">
+				<?php echo esc_html( $labels[ $status ] ); ?>
+			</span>
 		</div>
 
-		<p class="cbp-muted">کلید لایسنس را از حساب خود در «چی بپوشم؟» بردارید و اینجا وارد کنید. بدون لایسنس فعال، تصویر نهایی تولید نمی‌شود.</p>
+		<div class="cbp-license-steps">
 
-		<div class="cbp-field">
-			<label for="cbp-license-key">کلید لایسنس</label>
-			<input type="text" id="cbp-license-key" class="cbp-ltr" name="<?php echo esc_attr( CHIBEPOOSHAM_LICENSE_OPTION ); ?>[key]" value="<?php echo esc_attr( $license['key'] ); ?>" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+			<div class="cbp-license-step">
+				<div class="cbp-license-step__icon" aria-hidden="true">👤</div>
+				<div>
+					<h3>۱. حساب کاربری بساز</h3>
+					<p>
+						وارد وب‌سایت چی بپوشم؟ شو و یک حساب کاربری ایجاد کن.
+					</p>
+				</div>
+			</div>
+
+			<div class="cbp-license-step">
+				<div class="cbp-license-step__icon" aria-hidden="true">🏪</div>
+				<div>
+					<h3>۲. فروشگاهت را ثبت کن</h3>
+					<p>
+						در حساب کاربری، فروشگاهی را که می‌خواهی از سرویس
+						پرو مجازی استفاده کند ثبت کن.
+					</p>
+				</div>
+			</div>
+
+			<div class="cbp-license-step">
+				<div class="cbp-license-step__icon" aria-hidden="true">💳</div>
+				<div>
+					<h3>۳. پلن موردنظرت را بخر</h3>
+					<p>
+						با توجه به نیاز فروشگاهت، پلن مناسب را انتخاب و خریداری کن.
+					</p>
+				</div>
+			</div>
+
+			<div class="cbp-license-step">
+				<div class="cbp-license-step__icon" aria-hidden="true">🔑</div>
+				<div>
+					<h3>۴. کلید لایسنس را کپی کن</h3>
+					<p>
+						پس از خرید، کلید لایسنس را از حساب کاربری‌ات بردار
+						و در کادر زیر وارد کن.
+					</p>
+				</div>
+			</div>
+
 		</div>
 
-		<?php submit_button( 'ذخیره و فعال‌سازی', 'primary', 'submit', false ); ?>
+		<p>
+			<a
+				class="button button-primary"
+				href="https://chibepoosham.app/"
+				target="_blank"
+				rel="noopener noreferrer"
+			>ورود به وب‌سایت چی بپوشم؟ ↗</a>
+		</p>
 
-		<p class="cbp-note">تأیید کلید با سرور لایسنس هنوز متصل نشده است. فعلاً کلید فقط ذخیره می‌شود.</p>
-	</form>
+		<hr>
+
+		<h2>ورود کلید لایسنس</h2>
+
+		<p class="cbp-muted">
+			کلید خریداری‌شده را در کادر زیر وارد کن و روی ذخیره کلید بزن.
+		</p>
+
+		<form method="post" action="options.php">
+			<?php settings_fields( 'chibepoosham_license_group' ); ?>
+
+			<div class="cbp-field">
+				<label for="cbp-license-key">کلید لایسنس</label>
+
+				<input
+					type="text"
+					id="cbp-license-key"
+					class="cbp-ltr"
+					name="<?php echo esc_attr( CHIBEPOOSHAM_LICENSE_OPTION ); ?>[key]"
+					value="<?php echo esc_attr( $license['key'] ); ?>"
+					placeholder="XXXX-XXXX-XXXX-XXXX"
+					autocomplete="off"
+					spellcheck="false"
+				>
+
+				<p class="cbp-hint">
+					کلید را دقیقاً مطابق مقدار نمایش‌داده‌شده در حساب کاربری وارد کن.
+				</p>
+			</div>
+
+			<?php submit_button( 'ذخیره کلید لایسنس', 'primary', 'submit', false ); ?>
+		</form>
+
+		<div class="cbp-guide-alert" role="note">
+			<span class="cbp-guide-alert__icon" aria-hidden="true">ℹ️</span>
+			<div>
+				<strong>نکته مهم درباره فعال‌سازی</strong><br>
+				در نسخه فعلی افزونه، کلید لایسنس در تنظیمات وردپرس ذخیره می‌شود؛
+				اتصال تأیید لایسنس به سرور هنوز پیاده‌سازی نشده است.
+				بنابراین ذخیره کلید به‌تنهایی به معنی تأیید یا فعال‌شدن واقعی
+				لایسنس نیست.
+			</div>
+		</div>
+
+	</div>
+
 	<?php
 }
