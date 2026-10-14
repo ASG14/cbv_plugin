@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) || exit;
 const CBV_PAGE_SLUG = 'cbv';
 
 require_once __DIR__ . '/fields.php';
+require_once __DIR__ . '/tab-consumption.php';
 require_once __DIR__ . '/tab-license.php';
 require_once __DIR__ . '/tab-style.php';
 require_once __DIR__ . '/tab-usage.php';
@@ -23,9 +24,9 @@ add_filter( 'plugin_action_links_' . plugin_basename( CBV_FILE ), 'cbv_action_li
  */
 function cbv_admin_tabs(): array {
 	return array(
-		'license' => array(
-			'label'  => 'لایسنس',
-			'render' => 'cbv_tab_license',
+		'consumption' => array(
+			'label'  => 'پلن و مصرف',
+			'render' => 'chibepoosham_tab_consumption',
 		),
 		'style'   => array(
 			'label'  => 'ظاهر و متن‌ها',
@@ -37,12 +38,21 @@ function cbv_admin_tabs(): array {
 			'render' => 'cbv_tab_usage',
 			'assets' => 'cbv_tab_usage_assets',
 		),
+		'license' => array(
+			'label'  => 'لایسنس',
+			'render' => 'cbv_tab_license',
+		),
 	);
 }
 
 function cbv_current_tab(): string {
-	$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'license'; // phpcs:ignore WordPress.Security.NonceVerification
-	return isset( cbv_admin_tabs()[ $tab ] ) ? $tab : 'license';
+	$tab = isset( $_GET['tab'] )
+		? sanitize_key( wp_unslash( $_GET['tab'] ) )
+		: 'consumption'; // phpcs:ignore WordPress.Security.NonceVerification
+
+	return isset( cbv_admin_tabs()[ $tab ] )
+		? $tab
+		: 'consumption';
 }
 
 function cbv_admin_menu(): void {
