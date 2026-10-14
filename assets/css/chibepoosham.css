@@ -1,6 +1,19 @@
-/* Chi Bepoosham — virtual try-on widget.
-   Colors, radius and font come from CSS variables set inline by PHP. */
+/* =========================================================================
+   Chi Bepoosham — the ONLY stylesheet of the plugin.
 
+   PART 1  Widget (storefront + admin live preview)   ← edit here to restyle the product page
+   PART 2  Admin panel
+
+   Colors, radius and font of the widget come from CSS variables that PHP
+   writes inline from the admin settings (see chibepoosham_css_vars()).
+   ========================================================================= */
+
+
+/* =========================================================================
+   PART 1 — WIDGET
+   ========================================================================= */
+
+/* ---- Tokens & base ---------------------------------------------------- */
 .chibepoosham {
 	--cbp-primary: #7a2e4d;
 	--cbp-primary-text: #ffffff;
@@ -28,7 +41,7 @@
 	display: none !important;
 }
 
-/* Trigger button */
+/* ---- Trigger button --------------------------------------------------- */
 .chibepoosham .chibepoosham__trigger {
 	display: flex;
 	align-items: center;
@@ -65,7 +78,7 @@
 	outline-offset: 2px;
 }
 
-/* Form + result containers */
+/* ---- Form & result containers ----------------------------------------- */
 .chibepoosham__form,
 .chibepoosham__result {
 	padding: 16px;
@@ -98,7 +111,7 @@
 	opacity: 0.75;
 }
 
-/* 1. Gallery row: small selectable boxes in one horizontal line */
+/* ---- 1. Gallery row: small selectable boxes, one horizontal line ------- */
 .chibepoosham__thumbs {
 	display: flex;
 	flex-wrap: nowrap;
@@ -145,7 +158,7 @@
 	outline-offset: 2px;
 }
 
-/* 2. Drop zone */
+/* ---- 2. Drop zone ------------------------------------------------------ */
 .chibepoosham__file {
 	position: absolute;
 	width: 1px;
@@ -213,15 +226,7 @@
 	border-radius: calc(var(--cbp-radius) * 0.6);
 }
 
-/* 3. Full-width buttons */
-.chibepoosham .chibepoosham__choose {
-	display: block;
-	width: 100%;
-	margin: 12px 0 0;
-	padding: 12px 16px;
-	text-align: center;
-}
-
+/* ---- 3. Buttons (full width) ------------------------------------------- */
 .chibepoosham .chibepoosham__btn {
 	display: inline-block;
 	margin: 0;
@@ -241,6 +246,14 @@
 .chibepoosham .chibepoosham__btn:hover {
 	color: var(--cbp-primary-text);
 	background: var(--cbp-primary);
+}
+
+.chibepoosham .chibepoosham__choose {
+	display: block;
+	width: 100%;
+	margin: 12px 0 0;
+	padding: 12px 16px;
+	text-align: center;
 }
 
 .chibepoosham__file:focus-visible ~ .chibepoosham__choose {
@@ -302,7 +315,7 @@
 	}
 }
 
-/* Status */
+/* ---- Status ------------------------------------------------------------ */
 .chibepoosham__status {
 	min-height: 1.7em;
 	margin: 10px 0 0;
@@ -314,7 +327,7 @@
 	color: #b32d2e;
 }
 
-/* Result (replaces the form) */
+/* ---- Result (replaces the form) ---------------------------------------- */
 .chibepoosham__result {
 	text-align: center;
 }
@@ -349,10 +362,253 @@
 	margin-top: 14px;
 }
 
+/* ---- Admin-only notice shown when no product image is found ------------ */
 .chibepoosham__notice {
 	padding: 12px 16px;
 	font-size: 14px;
 	background: #fff8e5;
 	border: 1px solid #f0d58a;
 	border-radius: 8px;
+}
+
+
+/* =========================================================================
+   PART 2 — ADMIN PANEL
+   ========================================================================= */
+
+.cbp-admin {
+	max-width: 1280px;
+}
+
+.cbp-admin__title {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.cbp-admin__version {
+	font-size: 12px;
+	font-weight: 400;
+	color: #646970;
+}
+
+.cbp-admin__body {
+	margin-top: 20px;
+}
+
+.cbp-ltr {
+	direction: ltr;
+	text-align: left;
+}
+
+/* ---- Cards ------------------------------------------------------------- */
+.cbp-card {
+	padding: 20px 24px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+}
+
+.cbp-card--narrow {
+	max-width: 640px;
+}
+
+.cbp-card h2 {
+	margin: 0;
+	font-size: 17px;
+}
+
+.cbp-card h3 {
+	margin: 24px 0 8px;
+	font-size: 14px;
+}
+
+.cbp-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 8px;
+}
+
+.cbp-muted {
+	color: #50575e;
+}
+
+.cbp-hint {
+	margin: 6px 0 0;
+	font-size: 12px;
+	color: #646970;
+}
+
+.cbp-note {
+	margin: 16px 0 0;
+	padding: 10px 12px;
+	font-size: 13px;
+	background: #f6f7f7;
+	border-inline-start: 3px solid #8c8f94;
+}
+
+/* ---- License status badge ---------------------------------------------- */
+.cbp-badge {
+	padding: 3px 10px;
+	font-size: 12px;
+	border-radius: 999px;
+	background: #f0f0f1;
+	color: #50575e;
+	white-space: nowrap;
+}
+
+.cbp-badge--pending {
+	background: #fcf3d5;
+	color: #6e5600;
+}
+
+.cbp-badge--active {
+	background: #d7f0dc;
+	color: #0a5a1e;
+}
+
+/* ---- Form fields -------------------------------------------------------- */
+.cbp-field {
+	margin-bottom: 14px;
+}
+
+.cbp-field label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 500;
+}
+
+.cbp-field input[type="text"],
+.cbp-field input[type="number"],
+.cbp-field select {
+	width: 100%;
+	max-width: none;
+}
+
+.cbp-field input[type="range"] {
+	width: 100%;
+}
+
+.cbp-field--color .wp-picker-container {
+	display: block;
+}
+
+.cbp-check {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 8px 0;
+}
+
+.cbp-group {
+	margin: 0 0 20px;
+	padding: 0 0 8px;
+	border: 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.cbp-group legend {
+	margin-bottom: 12px;
+	padding: 0;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.cbp-form__actions {
+	position: sticky;
+	bottom: 0;
+	padding: 12px 0 0;
+	background: #fff;
+}
+
+/* ---- Style tab: form + live preview ------------------------------------ */
+.cbp-layout {
+	display: grid;
+	grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+	gap: 24px;
+	align-items: start;
+}
+
+@media (max-width: 1100px) {
+	.cbp-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+.cbp-preview {
+	position: sticky;
+	top: 48px;
+}
+
+@media (max-width: 1100px) {
+	.cbp-preview {
+		position: static;
+	}
+}
+
+.cbp-preview__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.cbp-preview__states {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.cbp-preview__states .cbp-check {
+	margin: 0;
+}
+
+.cbp-preview__stage {
+	padding: 24px;
+	background: #f0f0f1;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+}
+
+.cbp-preview__stage .chibepoosham {
+	margin: 0;
+}
+
+/* The preview is display-only. */
+.cbp-preview__stage .chibepoosham__trigger,
+.cbp-preview__stage .chibepoosham__drop,
+.cbp-preview__stage .chibepoosham__submit,
+.cbp-preview__stage .chibepoosham__btn {
+	pointer-events: none;
+}
+
+/* ---- Usage tab ---------------------------------------------------------- */
+.cbp-copybox {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 12px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+}
+
+.cbp-copybox code {
+	background: none;
+	font-size: 14px;
+	user-select: all;
+}
+
+.cbp-steps {
+	margin: 0;
+	padding-inline-start: 20px;
+	list-style: decimal;
+}
+
+.cbp-steps li {
+	margin-bottom: 6px;
 }

@@ -1,12 +1,11 @@
 <?php
 /**
- * Settings: defaults, getters, sanitizers.
+ * Appearance & text settings: defaults, getter, sanitizer, CSS variables.
  */
 
 defined( 'ABSPATH' ) || exit;
 
-const CHIBEPOOSHAM_OPTION         = 'chibepoosham_settings';
-const CHIBEPOOSHAM_LICENSE_OPTION = 'chibepoosham_license';
+const CHIBEPOOSHAM_OPTION = 'chibepoosham_settings';
 
 /**
  * Default values for every setting.
@@ -99,6 +98,7 @@ function chibepoosham_sanitize_settings( $input ): array {
 
 /**
  * CSS custom properties for the widget wrapper (inline style value).
+ * The stylesheet (assets/css/chibepoosham.css) consumes these variables.
  */
 function chibepoosham_css_vars( array $s ): string {
 	$vars = array(
@@ -117,45 +117,4 @@ function chibepoosham_css_vars( array $s ): string {
 		$css .= $name . ':' . $value . ';';
 	}
 	return $css;
-}
-
-/* -------------------------------------------------------------------------
- * License (UI only for now — verification will be added with the backend)
- * ---------------------------------------------------------------------- */
-
-function chibepoosham_get_license(): array {
-	$saved = get_option( CHIBEPOOSHAM_LICENSE_OPTION, array() );
-	return wp_parse_args(
-		is_array( $saved ) ? $saved : array(),
-		array(
-			'key'    => '',
-			'status' => 'inactive', // inactive | pending | active
-		)
-	);
-}
-
-function chibepoosham_sanitize_license( $input ): array {
-	$old = chibepoosham_get_license();
-	$key = isset( $input['key'] ) ? preg_replace( '/[^A-Za-z0-9\-_]/', '', (string) $input['key'] ) : '';
-
-	if ( '' === $key ) {
-		$status = 'inactive';
-	} elseif ( $key === $old['key'] && 'active' === $old['status'] ) {
-		$status = 'active';
-	} else {
-		$status = 'pending';
-	}
-
-	/**
-	 * Hook for the future license backend: verify the key and return the real status.
-	 *
-	 * @param string $status Status computed locally.
-	 * @param string $key    Sanitized license key.
-	 */
-	$status = apply_filters( 'chibepoosham_license_status_on_save', $status, $key );
-
-	return array(
-		'key'    => $key,
-		'status' => $status,
-	);
 }

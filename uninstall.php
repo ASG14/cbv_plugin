@@ -1,0 +1,9 @@
+<?php
+/**
+ * Runs when the plugin is deleted from the Plugins screen.
+ */
+
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
+
+delete_option( 'chibepoosham_settings' );
+delete_option( 'chibepoosham_license' );

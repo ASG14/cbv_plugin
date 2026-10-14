@@ -1,4 +1,4 @@
-/* Chi Bepoosham — admin panel: live preview + shortcode copy. */
+/* Chi Bepoosham — admin "style" tab: live preview. */
 (function ($) {
 	'use strict';
 
@@ -73,45 +73,5 @@
 
 	$('input[name="cbp-preview-state"]').on('change', function () {
 		setPreviewState(this.value);
-	});
-
-	/* Copy shortcode */
-	function fallbackCopy(text) {
-		var area = document.createElement('textarea');
-		area.value = text;
-		area.setAttribute('readonly', '');
-		area.style.position = 'fixed';
-		area.style.opacity = '0';
-		document.body.appendChild(area);
-		area.select();
-		try {
-			document.execCommand('copy');
-		} catch (e) {
-			/* ignore */
-		}
-		document.body.removeChild(area);
-	}
-
-	$('.cbp-copy').on('click', function () {
-		var $btn = $(this);
-		var text = $($btn.data('target')).text();
-		var original = $btn.text();
-
-		function done() {
-			$btn.text('کپی شد');
-			setTimeout(function () {
-				$btn.text(original);
-			}, 1600);
-		}
-
-		if (navigator.clipboard && navigator.clipboard.writeText) {
-			navigator.clipboard.writeText(text).then(done, function () {
-				fallbackCopy(text);
-				done();
-			});
-		} else {
-			fallbackCopy(text);
-			done();
-		}
 	});
 })(jQuery);

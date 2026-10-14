@@ -1,4 +1,4 @@
-/* Chi Bepoosham — front-end behaviour (vanilla JS, no dependencies). */
+/* Chi Bepoosham — storefront behaviour (vanilla JS, no dependencies). */
 (function () {
 	'use strict';
 

@@ -1,106 +1,11 @@
 <?php
 /**
- * Front-end: shortcode + widget markup (shared with the admin live preview).
+ * Widget markup (shared by the shortcode and the admin live preview).
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Product images the shopper can try on: main image first, then the gallery.
- *
- * @return array<int, array{id:int, url:string, thumb:string, alt:string}>
- */
-function chibepoosham_get_garment_images( int $product_id, int $max = 6 ): array {
-	$ids = array();
-
-	if ( function_exists( 'wc_get_product' ) ) {
-		$product = wc_get_product( $product_id );
-		if ( $product ) {
-			$main = (int) $product->get_image_id();
-			if ( $main ) {
-				$ids[] = $main;
-			}
-			$ids = array_merge( $ids, array_map( 'intval', $product->get_gallery_image_ids() ) );
-		}
-	}
-
-	if ( ! $ids && $product_id && has_post_thumbnail( $product_id ) ) {
-		$ids[] = (int) get_post_thumbnail_id( $product_id );
-	}
-
-	$ids    = array_slice( array_values( array_unique( array_filter( $ids ) ) ), 0, max( 1, $max ) );
-	$images = array();
-
-	foreach ( $ids as $id ) {
-		$url = wp_get_attachment_image_url( $id, 'large' );
-		if ( ! $url ) {
-			continue;
-		}
-		$alt      = trim( (string) get_post_meta( $id, '_wp_attachment_image_alt', true ) );
-		$images[] = array(
-			'id'    => $id,
-			'url'   => $url,
-			'thumb' => wp_get_attachment_image_url( $id, 'thumbnail' ) ?: $url,
-			'alt'   => '' !== $alt ? $alt : get_the_title( $product_id ),
-		);
-	}
-
-	return $images;
-}
-
-/**
- * Inline SVG placeholders used by the admin live preview.
- */
-function chibepoosham_placeholder_images(): array {
-	$colors = array( '#7a2e4d', '#2f5d62', '#b98a1f' );
-	$images = array();
-
-	foreach ( $colors as $i => $color ) {
-		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect width="300" height="400" fill="#efeaed"/>'
-			. '<path d="M105 70 60 92 28 150 70 172 92 148V330H208V148L230 172 272 150 240 92 195 70C185 100 165 108 150 108S115 100 105 70Z" fill="' . $color . '"/></svg>';
-		$uri      = 'data:image/svg+xml;charset=utf-8,' . rawurlencode( $svg );
-
-		$images[] = array(
-			'id'    => $i + 1,
-			'url'   => $uri,
-			'thumb' => $uri,
-			'alt'   => 'نمونه محصول',
-		);
-	}
-
-	return $images;
-}
-
-/**
- * Enqueue front-end assets (only when the widget is actually rendered).
- */
-function chibepoosham_enqueue_front_assets(): void {
-	wp_enqueue_style( 'chibepoosham-try-on', CHIBEPOOSHAM_URL . 'assets/css/try-on.css', array(), CHIBEPOOSHAM_VERSION );
-	wp_enqueue_script( 'chibepoosham-try-on', CHIBEPOOSHAM_URL . 'assets/js/try-on.js', array(), CHIBEPOOSHAM_VERSION, true );
-
-	$s = chibepoosham_get_settings();
-
-	wp_localize_script(
-		'chibepoosham-try-on',
-		'ChibepooshamTryOn',
-		array(
-			'endpoint' => esc_url_raw( rest_url( 'chibepoosham/v1/try-on' ) ),
-			'maxBytes' => 10 * MB_IN_BYTES,
-			'texts'    => array(
-				'loading'     => $s['loading_text'],
-				'error'       => $s['error_text'],
-				'change'      => 'تغییر فایل',
-				'invalidType' => 'فقط فایل JPG، PNG یا WEBP قابل قبول است.',
-				'tooLarge'    => 'حجم عکس باید کمتر از ۱۰ مگابایت باشد.',
-				'demo'        => 'نمایش آزمایشی: اتصال به سرویس پردازش هنوز فعال نشده است.',
-			),
-		)
-	);
-}
-
-/**
- * Widget markup.
- *
  * Structure: trigger button -> collapsible form (gallery row, drop zone,
  * file button, submit) -> result (replaces the form after a successful try-on).
  *
@@ -218,44 +123,3 @@ function chibepoosham_render_widget( array $args ): string {
 	<?php
 	return (string) ob_get_clean();
 }
-
-/**
- * Shortcode: [chibepoosham_try_on] or [chibepoosham_try_on id="123"]
- */
-function chibepoosham_shortcode( $atts ): string {
-	$atts = shortcode_atts( array( 'id' => 0 ), $atts, 'chibepoosham_try_on' );
-
-	$product_id = absint( $atts['id'] );
-
-	if ( ! $product_id ) {
-		global $product;
-		if ( $product instanceof WC_Product ) {
-			$product_id = $product->get_id();
-		}
-	}
-
-	if ( ! $product_id ) {
-		$product_id = (int) get_queried_object_id();
-	}
-
-	$settings = chibepoosham_get_settings();
-	$images   = $product_id ? chibepoosham_get_garment_images( $product_id, (int) $settings['max_images'] ) : array();
-
-	if ( ! $images ) {
-		// Only admins see why nothing is rendered.
-		return current_user_can( 'manage_options' )
-			? '<p class="chibepoosham__notice">شورت‌کد «چی بپوشم؟» تصویری برای این صفحه پیدا نکرد. آن را در صفحه‌ی یک محصول که تصویر دارد قرار بدهید. (این پیام فقط برای مدیر سایت نمایش داده می‌شود.)</p>'
-			: '';
-	}
-
-	chibepoosham_enqueue_front_assets();
-
-	return chibepoosham_render_widget(
-		array(
-			'images'     => $images,
-			'product_id' => $product_id,
-			'settings'   => $settings,
-		)
-	);
-}
-add_shortcode( 'chibepoosham_try_on', 'chibepoosham_shortcode' );
