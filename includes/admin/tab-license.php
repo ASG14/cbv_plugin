@@ -5,22 +5,22 @@
 
 defined( 'ABSPATH' ) || exit;
 
-add_action( 'admin_init', 'chibepoosham_register_license_setting' );
+add_action( 'admin_init', 'cbv_register_license_setting' );
 
-function chibepoosham_register_license_setting(): void {
+function cbv_register_license_setting(): void {
 	register_setting(
-		'chibepoosham_license_group',
-		CHIBEPOOSHAM_LICENSE_OPTION,
+		'cbv_license_group',
+		CBV_LICENSE_OPTION,
 		array(
 			'type'              => 'array',
-			'sanitize_callback' => 'chibepoosham_sanitize_license',
+			'sanitize_callback' => 'cbv_sanitize_license',
 			'default'           => array(),
 		)
 	);
 }
 
-function chibepoosham_tab_license(): void {
-	$license = chibepoosham_get_license();
+function cbv_tab_license(): void {
+	$license = cbv_get_license();
 
 	$labels = array(
 		'inactive' => 'فعال نشده',
@@ -33,7 +33,7 @@ function chibepoosham_tab_license(): void {
 		: 'inactive';
 	?>
 
-	<section class="cbp-guide-hero">
+	<section class="cbv-guide-hero">
 		<h2>فروشگاهت را به چی بپوشم؟ متصل کن 🔐</h2>
 		<p>
 			برای استفاده از سرویس پرو مجازی، ابتدا حساب کاربری بساز،
@@ -42,20 +42,20 @@ function chibepoosham_tab_license(): void {
 		</p>
 	</section>
 
-	<div class="cbp-card cbp-card--narrow">
+	<div class="cbv-card cbv-card--narrow">
 
-		<div class="cbp-card__head">
+		<div class="cbv-card__head">
 			<h2>وضعیت کلید لایسنس</h2>
 
-			<span class="cbp-badge cbp-badge--<?php echo esc_attr( $status ); ?>">
+			<span class="cbv-badge cbv-badge--<?php echo esc_attr( $status ); ?>">
 				<?php echo esc_html( $labels[ $status ] ); ?>
 			</span>
 		</div>
 
-		<div class="cbp-license-steps">
+		<div class="cbv-license-steps">
 
-			<div class="cbp-license-step">
-				<div class="cbp-license-step__icon" aria-hidden="true">👤</div>
+			<div class="cbv-license-step">
+				<div class="cbv-license-step__icon" aria-hidden="true">👤</div>
 				<div>
 					<h3>۱. حساب کاربری بساز</h3>
 					<p>
@@ -64,8 +64,8 @@ function chibepoosham_tab_license(): void {
 				</div>
 			</div>
 
-			<div class="cbp-license-step">
-				<div class="cbp-license-step__icon" aria-hidden="true">🏪</div>
+			<div class="cbv-license-step">
+				<div class="cbv-license-step__icon" aria-hidden="true">🏪</div>
 				<div>
 					<h3>۲. فروشگاهت را ثبت کن</h3>
 					<p>
@@ -75,8 +75,8 @@ function chibepoosham_tab_license(): void {
 				</div>
 			</div>
 
-			<div class="cbp-license-step">
-				<div class="cbp-license-step__icon" aria-hidden="true">💳</div>
+			<div class="cbv-license-step">
+				<div class="cbv-license-step__icon" aria-hidden="true">💳</div>
 				<div>
 					<h3>۳. پلن موردنظرت را بخر</h3>
 					<p>
@@ -85,8 +85,8 @@ function chibepoosham_tab_license(): void {
 				</div>
 			</div>
 
-			<div class="cbp-license-step">
-				<div class="cbp-license-step__icon" aria-hidden="true">🔑</div>
+			<div class="cbv-license-step">
+				<div class="cbv-license-step__icon" aria-hidden="true">🔑</div>
 				<div>
 					<h3>۴. کلید لایسنس را کپی کن</h3>
 					<p>
@@ -101,7 +101,7 @@ function chibepoosham_tab_license(): void {
 		<p>
 			<a
 				class="button button-primary"
-				href="https://chibepoosham.app/"
+				href="https://cbv.app/"
 				target="_blank"
 				rel="noopener noreferrer"
 			>ورود به وب‌سایت چی بپوشم؟ ↗</a>
@@ -111,28 +111,28 @@ function chibepoosham_tab_license(): void {
 
 		<h2>ورود کلید لایسنس</h2>
 
-		<p class="cbp-muted">
+		<p class="cbv-muted">
 			کلید خریداری‌شده را در کادر زیر وارد کن و روی ذخیره کلید بزن.
 		</p>
 
 		<form method="post" action="options.php">
-			<?php settings_fields( 'chibepoosham_license_group' ); ?>
+			<?php settings_fields( 'cbv_license_group' ); ?>
 
-			<div class="cbp-field">
-				<label for="cbp-license-key">کلید لایسنس</label>
+			<div class="cbv-field">
+				<label for="cbv-license-key">کلید لایسنس</label>
 
 				<input
 					type="text"
-					id="cbp-license-key"
-					class="cbp-ltr"
-					name="<?php echo esc_attr( CHIBEPOOSHAM_LICENSE_OPTION ); ?>[key]"
+					id="cbv-license-key"
+					class="cbv-ltr"
+					name="<?php echo esc_attr( CBV_LICENSE_OPTION ); ?>[key]"
 					value="<?php echo esc_attr( $license['key'] ); ?>"
 					placeholder="XXXX-XXXX-XXXX-XXXX"
 					autocomplete="off"
 					spellcheck="false"
 				>
 
-				<p class="cbp-hint">
+				<p class="cbv-hint">
 					کلید را دقیقاً مطابق مقدار نمایش‌داده‌شده در حساب کاربری وارد کن.
 				</p>
 			</div>
@@ -140,8 +140,8 @@ function chibepoosham_tab_license(): void {
 			<?php submit_button( 'ذخیره کلید لایسنس', 'primary', 'submit', false ); ?>
 		</form>
 
-		<div class="cbp-guide-alert" role="note">
-			<span class="cbp-guide-alert__icon" aria-hidden="true">ℹ️</span>
+		<div class="cbv-guide-alert" role="note">
+			<span class="cbv-guide-alert__icon" aria-hidden="true">ℹ️</span>
 			<div>
 				<strong>نکته مهم درباره فعال‌سازی</strong><br>
 				در نسخه فعلی افزونه، کلید لایسنس در تنظیمات وردپرس ذخیره می‌شود؛

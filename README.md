@@ -1,4 +1,4 @@
-# چی بپوشم؟ (chibepooshim_plugin)
+# چی بپوشم ویژن (cbv_plugin)
 
 افزونه‌ی وردپرس برای پرو مجازی لباس در فروشگاه‌های ووکامرسی. پردازش و تولید تصویر در سرویس «چی بپوشم؟» انجام می‌شود؛ این افزونه فقط پنل تنظیمات، شورت‌کد و ارتباط با سرویس را دارد.
 
@@ -8,8 +8,8 @@
 ## استفاده
 1. تب «لایسنس»: کلید لایسنس را وارد کنید.
 2. تب «ظاهر و متن‌ها»: متن، رنگ و شکل را با پیش‌نمایش زنده تنظیم کنید.
-3. تب «شورت‌کد و راهنما»: `[chibepoosham_try_on]` را در صفحه‌ی تک‌محصول بگذارید.
-   برای محصول مشخص: `[chibepoosham_try_on id="123"]`
+3. تب «شورت‌کد و راهنما»: `[cbv_try_on]` را در صفحه‌ی تک‌محصول بگذارید.
+   برای محصول مشخص: `[cbv_try_on id="123"]`
 
 در صفحه‌ی محصول فقط یک دکمه نمایش داده می‌شود. با کلیک روی آن فرمی باز می‌شود: ردیف تصاویر گالری محصول، کادر آپلود عکس کاربر و دکمه‌ی انتخاب فایل. نتیجه جای فرم نمایش داده می‌شود، با دکمه‌های دانلود و امتحان مجدد.
 
@@ -20,7 +20,7 @@ uninstall.php                    پاک‌کردن تنظیمات هنگام ح�
 includes/
   settings.php                   مقادیر پیش‌فرض، sanitize و CSS variables
   license.php                    ذخیره و sanitize لایسنس
-  rest.php                       POST /wp-json/chibepoosham/v1/try-on
+  rest.php                       POST /wp-json/cbv/v1/try-on
   frontend/
     gallery.php                  تصاویر محصول (اصلی + گالری) و تصاویر نمونه‌ی پیش‌نمایش
     widget.php                   HTML ویجت (مشترک با پیش‌نمایش ادمین)
@@ -32,27 +32,27 @@ includes/
     tab-style.php                تب ظاهر و متن‌ها (+ پیش‌نمایش زنده)
     tab-usage.php                تب شورت‌کد و راهنما
 assets/
-  css/chibepoosham.css           تنها فایل CSS: بخش ۱ ویجت، بخش ۲ پنل ادمین
+  css/cbv.css           تنها فایل CSS: بخش ۱ ویجت، بخش ۲ پنل ادمین
   js/front/try-on.js             رفتار فرانت: فرم، آپلود، ارسال، نتیجه
   js/admin/preview.js            پیش‌نمایش زنده‌ی تب ظاهر
   js/admin/copy.js               دکمه‌ی کپی تب شورت‌کد
 ```
 
-برای تغییر ظاهر صفحه‌ی محصول فقط بخش ۱ فایل `assets/css/chibepoosham.css` را ویرایش کنید.
-برای افزودن تب جدید به پنل: یک فایل `includes/admin/tab-xxx.php` بسازید و ردیفش را به `chibepoosham_admin_tabs()` اضافه کنید.
+برای تغییر ظاهر صفحه‌ی محصول فقط بخش ۱ فایل `assets/css/cbv.css` را ویرایش کنید.
+برای افزودن تب جدید به پنل: یک فایل `includes/admin/tab-xxx.php` بسازید و ردیفش را به `cbv_admin_tabs()` اضافه کنید.
 
 ## وضعیت فعلی
 - فرانت‌اند کامل است.
-- لایسنس: فقط ذخیره می‌شود (وضعیت `pending`). تأیید با سرور بعداً اضافه می‌شود؛ نقطه‌ی اتصال: فیلتر `chibepoosham_license_status_on_save`.
+- لایسنس: فقط ذخیره می‌شود (وضعیت `pending`). تأیید با سرور بعداً اضافه می‌شود؛ نقطه‌ی اتصال: فیلتر `cbv_license_status_on_save`.
 - سرویس پردازش وصل نیست؛ تا آن موقع endpoint در **حالت دمو** جواب می‌دهد (همان عکس کاربر را برمی‌گرداند).
 
 ## اتصال به سرویس try-on
-فیلتر `chibepoosham_try_on_request` را پیاده‌سازی کنید:
+فیلتر `cbv_try_on_request` را پیاده‌سازی کنید:
 
 ```php
-add_filter( 'chibepoosham_try_on_request', function ( $result, $payload ) {
+add_filter( 'cbv_try_on_request', function ( $result, $payload ) {
 	// $payload: person_file (مسیر temp)، person_mime، garment_file، garment_url، product_id
 	return my_call_tryon_api( $payload ); // URL تصویر نتیجه یا WP_Error
 }, 10, 2 );
 ```
-محدودیت نرخ پیش‌فرض ۱۰ درخواست در ۱۰ دقیقه برای هر IP است (فیلتر `chibepoosham_rate_limit`).
+محدودیت نرخ پیش‌فرض ۱۰ درخواست در ۱۰ دقیقه برای هر IP است (فیلتر `cbv_rate_limit`).

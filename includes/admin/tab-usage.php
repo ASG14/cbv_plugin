@@ -5,19 +5,19 @@
 
 defined( 'ABSPATH' ) || exit;
 
-function chibepoosham_tab_usage_assets(): void {
+function cbv_tab_usage_assets(): void {
 	wp_enqueue_script(
-		'chibepoosham-admin-copy',
-		CHIBEPOOSHAM_URL . 'assets/js/admin/copy.js',
+		'cbv-admin-copy',
+		CBV_URL . 'assets/js/admin/copy.js',
 		array(),
-		CHIBEPOOSHAM_VERSION,
+		CBV_VERSION,
 		true
 	);
 }
 
-function chibepoosham_tab_usage(): void {
+function cbv_tab_usage(): void {
 	?>
-	<section class="cbp-guide-hero">
+	<section class="cbv-guide-hero">
 		<h2>پرو مجازی را به صفحه محصولت اضافه کن ✨</h2>
 		<p>
 			ابتدا ظاهر ویجت را تنظیم کن، سپس شورت‌کد را در صفحه محصول قرار بده
@@ -25,11 +25,11 @@ function chibepoosham_tab_usage(): void {
 		</p>
 	</section>
 
-	<div class="cbp-guide-grid" aria-label="مراحل راه‌اندازی">
+	<div class="cbv-guide-grid" aria-label="مراحل راه‌اندازی">
 
-		<article class="cbp-guide-step">
-			<div class="cbp-guide-step__icon" aria-hidden="true">🎨</div>
-			<span class="cbp-guide-step__number">مرحله ۰۱</span>
+		<article class="cbv-guide-step">
+			<div class="cbv-guide-step__icon" aria-hidden="true">🎨</div>
+			<span class="cbv-guide-step__number">مرحله ۰۱</span>
 			<h3>ظاهر ویجت را شخصی‌سازی کن</h3>
 			<p>
 				از تب «ظاهر و متن‌ها»، رنگ‌ها، نوشته‌ها، شکل دکمه‌ها و تنظیمات
@@ -38,9 +38,9 @@ function chibepoosham_tab_usage(): void {
 			</p>
 		</article>
 
-		<article class="cbp-guide-step">
-			<div class="cbp-guide-step__icon" aria-hidden="true">📋</div>
-			<span class="cbp-guide-step__number">مرحله ۰۲</span>
+		<article class="cbv-guide-step">
+			<div class="cbv-guide-step__icon" aria-hidden="true">📋</div>
+			<span class="cbv-guide-step__number">مرحله ۰۲</span>
 			<h3>شورت‌کد را کپی کن</h3>
 			<p>
 				از بخش شورت‌کد، کد آماده را کپی کن. نیازی به نوشتن کد PHP
@@ -48,9 +48,9 @@ function chibepoosham_tab_usage(): void {
 			</p>
 		</article>
 
-		<article class="cbp-guide-step">
-			<div class="cbp-guide-step__icon" aria-hidden="true">🛍️</div>
-			<span class="cbp-guide-step__number">مرحله ۰۳</span>
+		<article class="cbv-guide-step">
+			<div class="cbv-guide-step__icon" aria-hidden="true">🛍️</div>
+			<span class="cbv-guide-step__number">مرحله ۰۳</span>
 			<h3>در صفحه محصول قرار بده</h3>
 			<p>
 				کد را در بلوک «شورت‌کد» وردپرس یا ویجت «Shortcode» المنتور
@@ -60,43 +60,43 @@ function chibepoosham_tab_usage(): void {
 
 	</div>
 
-	<section class="cbp-card cbp-guide-section">
+	<section class="cbv-card cbv-guide-section">
 		<h2>شورت‌کد اصلی</h2>
-		<p class="cbp-muted">
+		<p class="cbv-muted">
 			این کد را در صفحه تک‌محصول ووکامرس قرار بده. تصاویر محصول
 			برای استفاده در پرو مجازی به‌صورت خودکار دریافت می‌شوند.
 		</p>
 
-		<div class="cbp-copybox">
-			<code id="cbp-shortcode" class="cbp-ltr">[chibepoosham_try_on]</code>
+		<div class="cbv-copybox">
+			<code id="cbv-shortcode" class="cbv-ltr">[cbv_try_on]</code>
 			<button
 				type="button"
-				class="button button-primary cbp-copy"
-				data-target="#cbp-shortcode"
+				class="button button-primary cbv-copy"
+				data-target="#cbv-shortcode"
 			>کپی شورت‌کد</button>
 		</div>
 
 		<h3>نمایش برای یک محصول مشخص</h3>
-		<p class="cbp-muted">
+		<p class="cbv-muted">
 			اگر شورت‌کد را در صفحه‌ای غیر از صفحه همان محصول قرار می‌دهی،
 			شناسه محصول را مشخص کن. عدد ۱۲۳ در نمونه زیر باید با شناسه واقعی
 			محصول جایگزین شود.
 		</p>
 
-		<div class="cbp-copybox">
-			<code id="cbp-shortcode-id" class="cbp-ltr">[chibepoosham_try_on id="123"]</code>
+		<div class="cbv-copybox">
+			<code id="cbv-shortcode-id" class="cbv-ltr">[cbv_try_on id="123"]</code>
 			<button
 				type="button"
-				class="button cbp-copy"
-				data-target="#cbp-shortcode-id"
+				class="button cbv-copy"
+				data-target="#cbv-shortcode-id"
 			>کپی کد نمونه</button>
 		</div>
 	</section>
 
-	<section class="cbp-card cbp-guide-section">
+	<section class="cbv-card cbv-guide-section">
 		<h2>چطور شورت‌کد را در سایت قرار بدهم؟</h2>
 
-		<ol class="cbp-steps">
+		<ol class="cbv-steps">
 			<li>
 				در پیشخوان وردپرس، محصول موردنظر یا قالب تک‌محصول المنتور را باز کن.
 			</li>
@@ -112,14 +112,14 @@ function chibepoosham_tab_usage(): void {
 			</li>
 		</ol>
 
-		<p class="cbp-note">
+		<p class="cbv-note">
 			با کلیک روی دکمه پرو مجازی، فرم استفاده باز می‌شود و مشتری می‌تواند
 			تصویر موردنظر را از گالری محصول انتخاب و عکس خودش را بارگذاری کند.
 		</p>
 	</section>
 
-	<div class="cbp-guide-alert" role="note">
-		<span class="cbp-guide-alert__icon" aria-hidden="true">⚠️</span>
+	<div class="cbv-guide-alert" role="note">
+		<span class="cbv-guide-alert__icon" aria-hidden="true">⚠️</span>
 		<div>
 			<strong>سهمیه پلن را مرتب بررسی کن</strong><br>
 			هر بار که مشتری از پرو مجازی استفاده می‌کند، یک واحد از سهمیه پلن

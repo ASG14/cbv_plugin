@@ -8,17 +8,17 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Enqueue front-end assets (only when the widget is actually rendered).
  */
-function chibepoosham_enqueue_front_assets(): void {
-	wp_enqueue_style( 'chibepoosham', CHIBEPOOSHAM_URL . 'assets/css/chibepoosham.css', array(), CHIBEPOOSHAM_VERSION );
-	wp_enqueue_script( 'chibepoosham-try-on', CHIBEPOOSHAM_URL . 'assets/js/front/try-on.js', array(), CHIBEPOOSHAM_VERSION, true );
+function cbv_enqueue_front_assets(): void {
+	wp_enqueue_style( 'cbv', CBV_URL . 'assets/css/cbv.css', array(), CBV_VERSION );
+	wp_enqueue_script( 'cbv-try-on', CBV_URL . 'assets/js/front/try-on.js', array(), CBV_VERSION, true );
 
-	$s = chibepoosham_get_settings();
+	$s = cbv_get_settings();
 
 	wp_localize_script(
-		'chibepoosham-try-on',
-		'ChibepooshamTryOn',
+		'cbv-try-on',
+		'cbvTryOn',
 		array(
-			'endpoint' => esc_url_raw( rest_url( 'chibepoosham/v1/try-on' ) ),
+			'endpoint' => esc_url_raw( rest_url( 'cbv/v1/try-on' ) ),
 			'maxBytes' => 10 * MB_IN_BYTES,
 			'texts'    => array(
 				'loading'     => $s['loading_text'],
@@ -33,10 +33,10 @@ function chibepoosham_enqueue_front_assets(): void {
 }
 
 /**
- * Shortcode: [chibepoosham_try_on] or [chibepoosham_try_on id="123"]
+ * Shortcode: [cbv_try_on] or [cbv_try_on id="123"]
  */
-function chibepoosham_shortcode( $atts ): string {
-	$atts = shortcode_atts( array( 'id' => 0 ), $atts, 'chibepoosham_try_on' );
+function cbv_shortcode( $atts ): string {
+	$atts = shortcode_atts( array( 'id' => 0 ), $atts, 'cbv_try_on' );
 
 	$product_id = absint( $atts['id'] );
 
@@ -51,19 +51,19 @@ function chibepoosham_shortcode( $atts ): string {
 		$product_id = (int) get_queried_object_id();
 	}
 
-	$settings = chibepoosham_get_settings();
-	$images   = $product_id ? chibepoosham_get_garment_images( $product_id, (int) $settings['max_images'] ) : array();
+	$settings = cbv_get_settings();
+	$images   = $product_id ? cbv_get_garment_images( $product_id, (int) $settings['max_images'] ) : array();
 
 	if ( ! $images ) {
 		// Only admins see why nothing is rendered.
 		return current_user_can( 'manage_options' )
-			? '<p class="chibepoosham__notice">شورت‌کد «چی بپوشم؟» تصویری برای این صفحه پیدا نکرد. آن را در صفحه‌ی یک محصول که تصویر دارد قرار بدهید. (این پیام فقط برای مدیر سایت نمایش داده می‌شود.)</p>'
+			? '<p class="cbv__notice">شورت‌کد «چی بپوشم؟» تصویری برای این صفحه پیدا نکرد. آن را در صفحه‌ی یک محصول که تصویر دارد قرار بدهید. (این پیام فقط برای مدیر سایت نمایش داده می‌شود.)</p>'
 			: '';
 	}
 
-	chibepoosham_enqueue_front_assets();
+	cbv_enqueue_front_assets();
 
-	return chibepoosham_render_widget(
+	return cbv_render_widget(
 		array(
 			'images'     => $images,
 			'product_id' => $product_id,
@@ -71,4 +71,4 @@ function chibepoosham_shortcode( $atts ): string {
 		)
 	);
 }
-add_shortcode( 'chibepoosham_try_on', 'chibepoosham_shortcode' );
+add_shortcode( 'cbv_try_on', 'cbv_shortcode' );

@@ -2,7 +2,7 @@
 (function () {
 	'use strict';
 
-	var cfg = window.ChibepooshamTryOn || {};
+	var cfg = window.cbvTryOn || {};
 	var T = cfg.texts || {};
 	var ALLOWED = ['image/jpeg', 'image/png', 'image/webp'];
 	var MAX_BYTES = cfg.maxBytes || 10 * 1024 * 1024;
@@ -51,20 +51,20 @@
 	}
 
 	function init(root) {
-		var trigger = q(root, '.chibepoosham__trigger');
-		var form = q(root, '.chibepoosham__form');
-		var input = q(root, '.chibepoosham__file');
-		var drop = q(root, '.chibepoosham__drop');
-		var dropIntro = q(root, '.chibepoosham__drop-intro');
-		var dropPreview = q(root, '.chibepoosham__drop-preview');
-		var choose = q(root, '.chibepoosham__choose');
-		var submit = q(root, '.chibepoosham__submit');
-		var status = q(root, '.chibepoosham__status');
-		var result = q(root, '.chibepoosham__result');
-		var resultImg = q(root, '.chibepoosham__result-image');
-		var resultNote = q(root, '.chibepoosham__note');
-		var download = q(root, '.chibepoosham__download');
-		var again = q(root, '.chibepoosham__again');
+		var trigger = q(root, '.cbv__trigger');
+		var form = q(root, '.cbv__form');
+		var input = q(root, '.cbv__file');
+		var drop = q(root, '.cbv__drop');
+		var dropIntro = q(root, '.cbv__drop-intro');
+		var dropPreview = q(root, '.cbv__drop-preview');
+		var choose = q(root, '.cbv__choose');
+		var submit = q(root, '.cbv__submit');
+		var status = q(root, '.cbv__status');
+		var result = q(root, '.cbv__result');
+		var resultImg = q(root, '.cbv__result-image');
+		var resultNote = q(root, '.cbv__note');
+		var download = q(root, '.cbv__download');
+		var again = q(root, '.cbv__again');
 
 		var chooseLabel = choose.textContent;
 		var state = { file: null, previewUrl: null, busy: false };
@@ -86,7 +86,7 @@
 		}
 
 		function selectedImageId() {
-			var checked = root.querySelector('.chibepoosham__thumb input:checked');
+			var checked = root.querySelector('.cbv__thumb input:checked');
 			return checked ? checked.value : '';
 		}
 
@@ -242,7 +242,7 @@
 	}
 
 	function boot() {
-		var widgets = document.querySelectorAll('.chibepoosham:not([data-preview])');
+		var widgets = document.querySelectorAll('.cbv:not([data-preview])');
 		Array.prototype.forEach.call(widgets, init);
 	}
 

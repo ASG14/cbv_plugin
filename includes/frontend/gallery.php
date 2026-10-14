@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return array<int, array{id:int, url:string, thumb:string, alt:string}>
  */
-function chibepoosham_get_garment_images( int $product_id, int $max = 6 ): array {
+function cbv_get_garment_images( int $product_id, int $max = 6 ): array {
 	$ids = array();
 
 	if ( function_exists( 'wc_get_product' ) ) {
@@ -51,7 +51,7 @@ function chibepoosham_get_garment_images( int $product_id, int $max = 6 ): array
 /**
  * Inline SVG placeholders used by the admin live preview.
  */
-function chibepoosham_placeholder_images(): array {
+function cbv_placeholder_images(): array {
 	$colors = array( '#7a2e4d', '#2f5d62', '#b98a1f' );
 	$images = array();
 

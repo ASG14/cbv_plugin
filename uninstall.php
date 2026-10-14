@@ -5,5 +5,5 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-delete_option( 'chibepoosham_settings' );
-delete_option( 'chibepoosham_license' );
+delete_option( 'cbv_settings' );
+delete_option( 'cbv_license' );

@@ -5,12 +5,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const CHIBEPOOSHAM_OPTION = 'chibepoosham_settings';
+const CBV_OPTION = 'cbv_settings';
 
 /**
  * Default values for every setting.
  */
-function chibepoosham_defaults(): array {
+function cbv_defaults(): array {
 	return array(
 		// Texts.
 		'trigger_label'    => 'پرو آنلاین لباس',
@@ -25,7 +25,7 @@ function chibepoosham_defaults(): array {
 		'error_text'       => 'مشکلی پیش آمد. دوباره امتحان کن.',
 
 		// Colors.
-		'primary'          => '#7a2e4d',
+		'primary'          => '#4340FA',
 		'primary_text'     => '#ffffff',
 		'background'       => '#ffffff',
 		'surface'          => '#f8f5f7',
@@ -43,37 +43,37 @@ function chibepoosham_defaults(): array {
 	);
 }
 
-function chibepoosham_text_keys(): array {
+function cbv_text_keys(): array {
 	return array( 'trigger_label', 'title', 'description', 'drop_text', 'drop_hint', 'upload_label', 'submit_label', 'result_title', 'loading_text', 'error_text' );
 }
 
-function chibepoosham_color_keys(): array {
+function cbv_color_keys(): array {
 	return array( 'primary', 'primary_text', 'background', 'surface', 'text', 'border' );
 }
 
 /**
  * Saved settings merged over the defaults.
  */
-function chibepoosham_get_settings(): array {
-	$saved = get_option( CHIBEPOOSHAM_OPTION, array() );
-	return wp_parse_args( is_array( $saved ) ? $saved : array(), chibepoosham_defaults() );
+function cbv_get_settings(): array {
+	$saved = get_option( CBV_OPTION, array() );
+	return wp_parse_args( is_array( $saved ) ? $saved : array(), cbv_defaults() );
 }
 
 /**
  * Sanitize the style/text settings form.
  * The callback receives already-unslashed data from options.php.
  */
-function chibepoosham_sanitize_settings( $input ): array {
-	$d     = chibepoosham_defaults();
+function cbv_sanitize_settings( $input ): array {
+	$d     = cbv_defaults();
 	$input = is_array( $input ) ? $input : array();
 	$out   = array();
 
-	foreach ( chibepoosham_text_keys() as $key ) {
+	foreach ( cbv_text_keys() as $key ) {
 		$value       = isset( $input[ $key ] ) ? sanitize_text_field( $input[ $key ] ) : '';
 		$out[ $key ] = '' !== $value ? $value : $d[ $key ];
 	}
 
-	foreach ( chibepoosham_color_keys() as $key ) {
+	foreach ( cbv_color_keys() as $key ) {
 		$color       = isset( $input[ $key ] ) ? sanitize_hex_color( $input[ $key ] ) : null;
 		$out[ $key ] = $color ? $color : $d[ $key ];
 	}
@@ -98,18 +98,18 @@ function chibepoosham_sanitize_settings( $input ): array {
 
 /**
  * CSS custom properties for the widget wrapper (inline style value).
- * The stylesheet (assets/css/chibepoosham.css) consumes these variables.
+ * The stylesheet (assets/css/cbv.css) consumes these variables.
  */
-function chibepoosham_css_vars( array $s ): string {
+function cbv_css_vars( array $s ): string {
 	$vars = array(
-		'--cbp-primary'      => $s['primary'],
-		'--cbp-primary-text' => $s['primary_text'],
-		'--cbp-bg'           => $s['background'],
-		'--cbp-surface'      => $s['surface'],
-		'--cbp-text'         => $s['text'],
-		'--cbp-border'       => $s['border'],
-		'--cbp-radius'       => (int) $s['radius'] . 'px',
-		'--cbp-font'         => $s['font'],
+		'--cbv-primary'      => $s['primary'],
+		'--cbv-primary-text' => $s['primary_text'],
+		'--cbv-bg'           => $s['background'],
+		'--cbv-surface'      => $s['surface'],
+		'--cbv-text'         => $s['text'],
+		'--cbv-border'       => $s['border'],
+		'--cbv-radius'       => (int) $s['radius'] . 'px',
+		'--cbv-font'         => $s['font'],
 	);
 
 	$css = '';

@@ -43,5 +43,5 @@
 		});
 	}
 
-	Array.prototype.forEach.call(document.querySelectorAll('.cbp-copy'), bind);
+	Array.prototype.forEach.call(document.querySelectorAll('.cbv-copy'), bind);
 })();

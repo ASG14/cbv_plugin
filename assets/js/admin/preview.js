@@ -2,7 +2,7 @@
 (function ($) {
 	'use strict';
 
-	var $widget = $('#cbp-preview .chibepoosham');
+	var $widget = $('#cbv-preview .cbv');
 
 	function setVar(name, value) {
 		if ($widget.length && name) {
@@ -11,9 +11,9 @@
 	}
 
 	/* Colors */
-	$('.cbp-color').each(function () {
+	$('.cbv-color').each(function () {
 		var $input = $(this);
-		var cssVar = $input.data('cbpVar');
+		var cssVar = $input.data('cbvVar');
 		var fallback = $input.data('defaultColor');
 
 		$input.wpColorPicker({
@@ -27,51 +27,51 @@
 	});
 
 	/* Texts */
-	$('[data-cbp-text]').on('input', function () {
-		var key = $(this).data('cbpText');
-		$widget.find('[data-cbp-bind="' + key + '"]').text(this.value);
+	$('[data-cbv-text]').on('input', function () {
+		var key = $(this).data('cbvText');
+		$widget.find('[data-cbv-bind="' + key + '"]').text(this.value);
 	});
 
 	/* Corner radius */
-	$('[data-cbp-radius]').on('input', function () {
-		setVar('--cbp-radius', this.value + 'px');
-		$('#cbp-radius-out').text(this.value);
+	$('[data-cbv-radius]').on('input', function () {
+		setVar('--cbv-radius', this.value + 'px');
+		$('#cbv-radius-out').text(this.value);
 	});
 
 	/* Font */
-	$('[data-cbp-font]').on('input', function () {
-		setVar('--cbp-font', $.trim(this.value) || 'inherit');
+	$('[data-cbv-font]').on('input', function () {
+		setVar('--cbv-font', $.trim(this.value) || 'inherit');
 	});
 
 	/* Button style */
-	$('[data-cbp-button]').on('change', function () {
-		$widget.removeClass('chibepoosham--solid chibepoosham--outline').addClass('chibepoosham--' + this.value);
+	$('[data-cbv-button]').on('change', function () {
+		$widget.removeClass('cbv--solid cbv--outline').addClass('cbv--' + this.value);
 	});
 
 	/* Toggles */
-	$('[data-cbp-toggle]').on('change', function () {
-		var key = $(this).data('cbpToggle');
+	$('[data-cbv-toggle]').on('change', function () {
+		var key = $(this).data('cbvToggle');
 		var on = this.checked;
 
 		if (key === 'shadow') {
-			$widget.toggleClass('chibepoosham--shadow', on);
+			$widget.toggleClass('cbv--shadow', on);
 		} else if (key === 'show_title') {
-			$widget.find('.chibepoosham__title').prop('hidden', !on);
+			$widget.find('.cbv__title').prop('hidden', !on);
 		} else if (key === 'show_description') {
-			$widget.find('.chibepoosham__description').prop('hidden', !on);
+			$widget.find('.cbv__description').prop('hidden', !on);
 		}
 	});
 
 	/* Preview state: button only / open form / result */
 	function setPreviewState(state) {
-		var $trigger = $widget.find('.chibepoosham__trigger');
+		var $trigger = $widget.find('.cbv__trigger');
 
 		$trigger.prop('hidden', state === 'result').attr('aria-expanded', state === 'form' ? 'true' : 'false');
-		$widget.find('.chibepoosham__form').prop('hidden', state !== 'form');
-		$widget.find('.chibepoosham__result').prop('hidden', state !== 'result');
+		$widget.find('.cbv__form').prop('hidden', state !== 'form');
+		$widget.find('.cbv__result').prop('hidden', state !== 'result');
 	}
 
-	$('input[name="cbp-preview-state"]').on('change', function () {
+	$('input[name="cbv-preview-state"]').on('change', function () {
 		setPreviewState(this.value);
 	});
 })(jQuery);
