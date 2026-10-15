@@ -101,7 +101,7 @@ function cbv_tab_license(): void {
 		<p>
 			<a
 				class="button button-primary"
-				href="https://cbv.app/"
+				href="https://chibepoosham.app/"
 				target="_blank"
 				rel="noopener noreferrer"
 			>ورود به وب‌سایت چی بپوشم؟ ↗</a>

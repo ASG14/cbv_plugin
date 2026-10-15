@@ -26,7 +26,7 @@ function cbv_admin_tabs(): array {
 	return array(
 		'consumption' => array(
 			'label'  => 'پلن و مصرف',
-			'render' => 'chibepoosham_tab_consumption',
+			'render' => 'cbv_tab_consumption',
 		),
 		'style'   => array(
 			'label'  => 'ظاهر و متن‌ها',

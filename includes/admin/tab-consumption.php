@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-function chibepoosham_tab_consumption(): void {
+function cbv_tab_consumption(): void {
 
 	/*
 	 * Temporary demo data.

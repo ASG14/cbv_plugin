@@ -29,7 +29,7 @@ function cbv_tab_usage(): void {
 
 		<article class="cbv-guide-step">
 			<div class="cbv-guide-step__icon" aria-hidden="true">🎨</div>
-			<span class="cbv-guide-step__number">مرحله ۰۱</span>
+			<span class="cbv-guide-step__number">مرحله 1</span>
 			<h3>ظاهر ویجت را شخصی‌سازی کن</h3>
 			<p>
 				از تب «ظاهر و متن‌ها»، رنگ‌ها، نوشته‌ها، شکل دکمه‌ها و تنظیمات
@@ -40,7 +40,7 @@ function cbv_tab_usage(): void {
 
 		<article class="cbv-guide-step">
 			<div class="cbv-guide-step__icon" aria-hidden="true">📋</div>
-			<span class="cbv-guide-step__number">مرحله ۰۲</span>
+			<span class="cbv-guide-step__number">مرحله 2</span>
 			<h3>شورت‌کد را کپی کن</h3>
 			<p>
 				از بخش شورت‌کد، کد آماده را کپی کن. نیازی به نوشتن کد PHP
@@ -50,7 +50,7 @@ function cbv_tab_usage(): void {
 
 		<article class="cbv-guide-step">
 			<div class="cbv-guide-step__icon" aria-hidden="true">🛍️</div>
-			<span class="cbv-guide-step__number">مرحله ۰۳</span>
+			<span class="cbv-guide-step__number">مرحله 3</span>
 			<h3>در صفحه محصول قرار بده</h3>
 			<p>
 				کد را در بلوک «شورت‌کد» وردپرس یا ویجت «Shortcode» المنتور
@@ -63,7 +63,7 @@ function cbv_tab_usage(): void {
 	<section class="cbv-card cbv-guide-section">
 		<h2>شورت‌کد اصلی</h2>
 		<p class="cbv-muted">
-			این کد را در صفحه تک‌محصول ووکامرس قرار بده. تصاویر محصول
+			این کد را در قالب تک‌محصول المنتور قرار بده. تصاویر محصول
 			برای استفاده در پرو مجازی به‌صورت خودکار دریافت می‌شوند.
 		</p>
 
@@ -79,7 +79,7 @@ function cbv_tab_usage(): void {
 		<h3>نمایش برای یک محصول مشخص</h3>
 		<p class="cbv-muted">
 			اگر شورت‌کد را در صفحه‌ای غیر از صفحه همان محصول قرار می‌دهی،
-			شناسه محصول را مشخص کن. عدد ۱۲۳ در نمونه زیر باید با شناسه واقعی
+			شناسه محصول را مشخص کن. عدد 123 در نمونه زیر باید با شناسه واقعی
 			محصول جایگزین شود.
 		</p>
 
